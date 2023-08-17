@@ -24,6 +24,7 @@ import { Prompt } from '@/types/prompt';
 
 import HomeContext from '@/pages/api/home/home.context';
 
+import { Toggle } from '../Common/Toggle';
 import { PluginSelect } from './PluginSelect';
 import { PromptList } from './PromptList';
 import { VariableModal } from './VariableModal';
@@ -48,7 +49,13 @@ export const ChatInput = ({
   const { t } = useTranslation('chat');
 
   const {
-    state: { selectedConversation, messageIsStreaming, prompts },
+    state: {
+      selectedConversation,
+      messageIsStreaming,
+      prompts,
+      entity,
+      isPrivacyEnabled,
+    },
 
     dispatch: homeDispatch,
   } = useContext(HomeContext);
@@ -97,7 +104,12 @@ export const ChatInput = ({
       return;
     }
 
-    onSend({ role: 'user', content }, plugin);
+    let currentContent = content;
+    if (isPrivacyEnabled) {
+      currentContent = `Classify the following text ${content} under categories ${entity}`;
+    }
+    console.log(currentContent);
+    //    onSend({ role: 'user', content }, plugin);
     setContent('');
     setPlugin(null);
 
@@ -221,6 +233,10 @@ export const ChatInput = ({
     if (textareaRef && textareaRef.current) {
       textareaRef.current.focus();
     }
+  };
+
+  const handleIsPrivacyEnable = (isEnabled: boolean) => {
+    homeDispatch({ field: 'isPrivacyEnabled', value: isEnabled });
   };
 
   useEffect(() => {
@@ -378,6 +394,9 @@ export const ChatInput = ({
             />
           )}
         </div>
+      </div>
+      <div className="px-3 pt-2">
+        <Toggle onToggle={handleIsPrivacyEnable} />
       </div>
       <div className="px-3 pt-2 pb-3 text-center text-[12px] text-black/50 dark:text-white/50 md:px-4 md:pt-3 md:pb-6">
         <a

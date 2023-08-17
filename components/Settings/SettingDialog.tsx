@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect, useReducer, useRef } from 'react';
+import { FC, useContext, useEffect, useRef } from 'react';
 
 import { useTranslation } from 'next-i18next';
 
