@@ -1,11 +1,12 @@
 import { IconFolderPlus, IconMistOff, IconPlus } from '@tabler/icons-react';
-import { ReactNode, useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   MdOutlineKeyboardArrowDown,
   MdOutlineKeyboardArrowUp,
 } from 'react-icons/md';
 
+import CustomCheckbox from '../Entities/components/CustomCheckbox';
 import {
   CloseSidebarButton,
   OpenSidebarButton,
@@ -178,9 +179,10 @@ const Sidebar = <T,>({
         {side == 'right' && (
           <div>
             <div className="flex bg-[#343541] items-center p-2 gap-4">
-              <div onClick={() => togglePII((pII) => !pII)}>
-                <a href="#">{handlePII()}</a>
-              </div>
+              <CustomCheckbox
+                isChecked={pII}
+                onClick={() => togglePII((pII) => !pII)}
+              />
               <span className="flex-1">Personal Information</span>
               <div
                 onClick={() => togglePIIDropDown((pIIDropdown) => !pIIDropdown)}
