@@ -14,8 +14,8 @@ type CheckboxData = {
 };
 
 const entityDataMap = new Map([
-  ['Entity1', ['Label 1', 'Label 2']],
-  ['Entity2', ['Label 3', 'Label 4']],
+  ['Entity1', ['Label 1', 'Label 2', 'Label 1', 'Label 2']],
+  ['Entity2', ['Label 3', 'Label 4', 'Label 1', 'Label 2']],
   // ... Add more entities and labels as needed
 ]);
 
@@ -59,10 +59,14 @@ const EntityCheckboxManager = () => {
       !newCheckboxes[index].labels[labelIndex].isChecked;
 
     // Update entity checkbox state based on label checkboxes
-    const isAnyLabelChecked = newCheckboxes[index].labels.some(
-      (item) => item.isChecked,
+    const anyUncheckedValue = newCheckboxes[index].labels.find(
+      (value) => !value.isChecked,
     );
-    newCheckboxes[index].isChecked = isAnyLabelChecked;
+    if (anyUncheckedValue) {
+      newCheckboxes[index].isChecked = false;
+    } else {
+      newCheckboxes[index].isChecked = true;
+    }
 
     setCheckboxes(newCheckboxes);
   };
