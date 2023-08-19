@@ -1,14 +1,17 @@
 import React from 'react';
 
 interface IProps {
+  size?: number;
   isChecked?: boolean;
   onClick: () => void;
 }
 
-const CustomCheckbox = ({ isChecked, onClick }: IProps) => {
+const CustomCheckbox = ({ size, isChecked, onClick }: IProps) => {
   return (
     <div
-      className="flex cursor-pointer justify-center items-center w-6 h-6 border-2 border-white rounded p-0.4"
+      className={`flex cursor-pointer justify-center items-center w-${
+        size ?? 6
+      } h-${size ?? 6} border-2 border-white rounded p-0.4`}
       onClick={onClick}
     >
       {isChecked && (

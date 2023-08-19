@@ -7,6 +7,7 @@ import {
 } from 'react-icons/md';
 
 import CustomCheckbox from '../Entities/components/CustomCheckbox';
+import EntityCheckboxManager from '../Entities/components/EntityCheckboxManager';
 import {
   CloseSidebarButton,
   OpenSidebarButton,
@@ -213,6 +214,7 @@ const Sidebar = <T,>({
                 </label>
               </div>
             )}
+            <EntityCheckboxManager />
           </div>
         )}
 
