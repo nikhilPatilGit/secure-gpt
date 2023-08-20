@@ -18,6 +18,7 @@ export interface HomeInitialState {
   selectedConversation: Conversation | undefined;
   currentMessage: Message | undefined;
   prompts: Prompt[];
+  entity: string;
   temperature: number;
   showChatbar: boolean;
   showPromptbar: boolean;
@@ -51,4 +52,5 @@ export const initialState: HomeInitialState = {
   defaultModelId: undefined,
   serverSideApiKeyIsSet: false,
   serverSidePluginKeysSet: false,
+  entity: '',
 };

@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   MdOutlineKeyboardArrowDown,
   MdOutlineKeyboardArrowUp,
@@ -11,7 +11,6 @@ type CheckboxData = {
   labels: Array<{ label: string; isChecked: boolean }>;
   isChecked: boolean;
   dropDown: boolean;
-  entitiesBundle: string;
 };
 
 const entityDataMap = new Map([
@@ -49,7 +48,10 @@ const entityDataMap = new Map([
   ],
 ]);
 
-const EntityCheckboxManager = () => {
+interface IProps {
+  handleUpdateEntity: (entity: string) => void;
+}
+const EntityCheckboxManager = ({ handleUpdateEntity }: IProps) => {
   const initialCheckboxes: CheckboxData[] = Array.from(
     entityDataMap.keys(),
   ).map((entity) => ({
@@ -69,18 +71,16 @@ const EntityCheckboxManager = () => {
     (checkboxData: CheckboxData[]): string => {
       return checkboxData
         .reduce((checkedLabels: string[], checkbox) => {
-          if (checkbox.isChecked) {
-            checkbox.labels.forEach((label) => {
-              if (label.isChecked) {
-                const words = label.label.split(' ');
-                const processedLabel =
-                  words.length >= 2
-                    ? words.map((word) => word.toUpperCase()).join('_')
-                    : label.label.toUpperCase();
-                checkedLabels.push(processedLabel);
-              }
-            });
-          }
+          checkbox.labels.forEach((label) => {
+            if (label.isChecked) {
+              const words = label.label.split(' ');
+              const processedLabel =
+                words.length >= 2
+                  ? words.map((word) => word.toUpperCase()).join('_')
+                  : label.label.toUpperCase();
+              checkedLabels.push(processedLabel);
+            }
+          });
           return checkedLabels;
         }, [])
         .join(',');
@@ -121,15 +121,9 @@ const EntityCheckboxManager = () => {
       } else {
         newCheckboxes[index].isChecked = true;
       }
-      newCheckboxes[index].entitiesBundle =
-        processEntitiesBundle(newCheckboxes);
-
-      newCheckboxes[index].entitiesBundle =
-        processEntitiesBundle(newCheckboxes);
-      console.log(newCheckboxes[index].entitiesBundle);
       setCheckboxes(newCheckboxes);
     },
-    [checkboxes, processEntitiesBundle],
+    [checkboxes],
   );
 
   const handleDropdown = useCallback(
@@ -189,6 +183,12 @@ const EntityCheckboxManager = () => {
       renderDropdown,
     ],
   );
+
+  useEffect(() => {
+    if (checkboxes) {
+      handleUpdateEntity(processEntitiesBundle(checkboxes));
+    }
+  }, [checkboxes, processEntitiesBundle, handleUpdateEntity]);
 
   return <div>{memoizedCheckboxes}</div>;
 };

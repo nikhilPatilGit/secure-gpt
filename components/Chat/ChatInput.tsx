@@ -48,7 +48,7 @@ export const ChatInput = ({
   const { t } = useTranslation('chat');
 
   const {
-    state: { selectedConversation, messageIsStreaming, prompts },
+    state: { selectedConversation, messageIsStreaming, prompts, entity },
 
     dispatch: homeDispatch,
   } = useContext(HomeContext);
@@ -97,8 +97,11 @@ export const ChatInput = ({
       return;
     }
 
-    onSend({ role: 'user', content }, plugin);
-    setContent('');
+    console.log(
+      `Classify the following text ${content} under categories ${entity}`,
+    );
+    //onSend({ role: 'user', content }, plugin);
+    //setContent('');
     setPlugin(null);
 
     if (window.innerWidth < 640 && textareaRef && textareaRef.current) {

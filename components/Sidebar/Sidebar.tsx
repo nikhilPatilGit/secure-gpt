@@ -1,10 +1,7 @@
 import { IconFolderPlus, IconMistOff, IconPlus } from '@tabler/icons-react';
-import { ReactNode, useState } from 'react';
+import { ReactNode } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  MdOutlineKeyboardArrowDown,
-  MdOutlineKeyboardArrowUp,
-} from 'react-icons/md';
 
 import EntityCheckboxManager from '../Entities/components/EntityCheckboxManager';
 import {
@@ -28,6 +25,7 @@ interface Props<T> {
   handleCreateItem: () => void;
   handleCreateFolder: () => void;
   handleDrop: (e: any) => void;
+  handleUpdateEntity: (entity: string) => void;
 }
 
 const Sidebar = <T,>({
@@ -44,10 +42,8 @@ const Sidebar = <T,>({
   handleCreateItem,
   handleCreateFolder,
   handleDrop,
+  handleUpdateEntity,
 }: Props<T>) => {
-  const [pII, togglePII] = useState(true);
-  const [pIIDropdown, togglePIIDropDown] = useState(false);
-
   const { t } = useTranslation('promptbar');
 
   const allowDrop = (e: any) => {
@@ -62,13 +58,6 @@ const Sidebar = <T,>({
     e.target.style.background = 'none';
   };
 
-  const handlePIIDropDown = () => {
-    return pIIDropdown ? (
-      <MdOutlineKeyboardArrowDown size={28} />
-    ) : (
-      <MdOutlineKeyboardArrowUp size={28} />
-    );
-  };
   return isOpen ? (
     <div>
       <div
@@ -76,7 +65,7 @@ const Sidebar = <T,>({
       >
         {side == 'right' && (
           <div>
-            <EntityCheckboxManager />
+            <EntityCheckboxManager handleUpdateEntity={handleUpdateEntity} />
           </div>
         )}
 

@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useCallback, useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useCreateReducer } from '@/hooks/useCreateReducer';
@@ -51,7 +51,6 @@ const Promptbar = () => {
         content: '',
         model: OpenAIModels[defaultModelId],
         folderId: null,
-        entities: '',
       };
 
       const updatedPrompts = [...prompts, newPrompt];
@@ -61,6 +60,10 @@ const Promptbar = () => {
       savePrompts(updatedPrompts);
     }
   };
+
+  const handleUpdateEntity = useCallback((entity: string) => {
+    homeDispatch({ field: 'entity', value: entity });
+  }, []);
 
   const handleDeletePrompt = (prompt: Prompt) => {
     const updatedPrompts = prompts.filter((p) => p.id !== prompt.id);
@@ -123,6 +126,7 @@ const Promptbar = () => {
         handleCreatePrompt,
         handleDeletePrompt,
         handleUpdatePrompt,
+        handleUpdateEntity,
       }}
     >
       <Sidebar<Prompt>
@@ -144,6 +148,7 @@ const Promptbar = () => {
         handleCreateItem={handleCreatePrompt}
         handleCreateFolder={() => handleCreateFolder(t('New folder'), 'prompt')}
         handleDrop={handleDrop}
+        handleUpdateEntity={handleUpdateEntity}
       />
     </PromptbarContext.Provider>
   );
