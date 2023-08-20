@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useCreateReducer } from '@/hooks/useCreateReducer';
@@ -11,7 +11,6 @@ import { Prompt } from '@/types/prompt';
 import HomeContext from '@/pages/api/home/home.context';
 
 import { PromptFolders } from './components/PromptFolders';
-import { PromptbarSettings } from './components/PromptbarSettings';
 import { Prompts } from './components/Prompts';
 
 import Sidebar from '../Sidebar';
@@ -52,6 +51,7 @@ const Promptbar = () => {
         content: '',
         model: OpenAIModels[defaultModelId],
         folderId: null,
+        entities: '',
       };
 
       const updatedPrompts = [...prompts, newPrompt];

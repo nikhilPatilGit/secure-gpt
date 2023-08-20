@@ -11,6 +11,7 @@ type CheckboxData = {
   labels: Array<{ label: string; isChecked: boolean }>;
   isChecked: boolean;
   dropDown: boolean;
+  entitiesBundle: string;
 };
 
 const entityDataMap = new Map([
@@ -58,10 +59,34 @@ const EntityCheckboxManager = () => {
       .map((label) => ({ label, isChecked: true })),
     isChecked: true,
     dropDown: false,
+    entitiesBundle: '',
   }));
 
   const [checkboxes, setCheckboxes] =
     useState<CheckboxData[]>(initialCheckboxes);
+
+  const processEntitiesBundle = useCallback(
+    (checkboxData: CheckboxData[]): string => {
+      return checkboxData
+        .reduce((checkedLabels: string[], checkbox) => {
+          if (checkbox.isChecked) {
+            checkbox.labels.forEach((label) => {
+              if (label.isChecked) {
+                const words = label.label.split(' ');
+                const processedLabel =
+                  words.length >= 2
+                    ? words.map((word) => word.toUpperCase()).join('_')
+                    : label.label.toUpperCase();
+                checkedLabels.push(processedLabel);
+              }
+            });
+          }
+          return checkedLabels;
+        }, [])
+        .join(',');
+    },
+    [],
+  );
 
   const handleEntityCheckboxChange = useCallback(
     (index: number) => {
@@ -96,10 +121,15 @@ const EntityCheckboxManager = () => {
       } else {
         newCheckboxes[index].isChecked = true;
       }
+      newCheckboxes[index].entitiesBundle =
+        processEntitiesBundle(newCheckboxes);
 
+      newCheckboxes[index].entitiesBundle =
+        processEntitiesBundle(newCheckboxes);
+      console.log(newCheckboxes[index].entitiesBundle);
       setCheckboxes(newCheckboxes);
     },
-    [checkboxes],
+    [checkboxes, processEntitiesBundle],
   );
 
   const handleDropdown = useCallback(
