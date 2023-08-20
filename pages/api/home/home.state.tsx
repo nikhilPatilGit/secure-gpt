@@ -28,6 +28,7 @@ export interface HomeInitialState {
   defaultModelId: OpenAIModelID | undefined;
   serverSideApiKeyIsSet: boolean;
   serverSidePluginKeysSet: boolean;
+  isPrivacyEnabled: boolean;
 }
 
 export const initialState: HomeInitialState = {
@@ -52,5 +53,7 @@ export const initialState: HomeInitialState = {
   defaultModelId: undefined,
   serverSideApiKeyIsSet: false,
   serverSidePluginKeysSet: false,
-  entity: '',
+  entity:
+    'ACCOUNT_NUMBER,AGE,DATE,DATE_OF_BIRTH,DATE_INTERVAL,DRIVER_LICENSE,DURATION,EMAIL_ADDRESS,CITY,RELIGION,SOCIAL_SECURITY_NUMBER,PHONE_NUMBER,BLOOD_TYPE,HEALTH_CONDITION,DRUG,DOSAGE,MEDICAL_PROCESS,INJURY,BANK_ACCOUNT,CREDIT_CARD_NUMBER,CVV,CREDIT_CARD_EXPIRATION',
+  isPrivacyEnabled: true,
 };
