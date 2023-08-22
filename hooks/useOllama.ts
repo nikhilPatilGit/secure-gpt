@@ -1,7 +1,7 @@
 import { Ollama } from 'langchain/llms/ollama';
 
 const ollama = new Ollama({
-  baseUrl: 'http://localhost:11434', // Default value
+  baseUrl: 'http://0.0.0.0:11434', // Default value
   model: 'llama2', // Default value
 });
 
