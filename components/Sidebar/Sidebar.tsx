@@ -24,7 +24,7 @@ interface Props<T> {
   handleCreateItem: () => void;
   handleCreateFolder: () => void;
   handleDrop: (e: any) => void;
-  handleUpdateEntity?: (entity: string) => void;
+  handleUpdateEntity: (entity: string) => void;
 }
 
 const Sidebar = <T,>({
@@ -64,7 +64,7 @@ const Sidebar = <T,>({
       >
         {side == 'right' && (
           <div>
-            <EntityCheckboxManager handleUpdateEntity={handleUpdateEntity!} />
+            <EntityCheckboxManager handleUpdateEntity={handleUpdateEntity} />
           </div>
         )}
 
