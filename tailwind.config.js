@@ -12,6 +12,9 @@ module.exports = {
   theme: {
     extend: {},
   },
+  daisyui: {
+    themes: ['light', 'dark', 'emerald'],
+  },
   variants: {
     extend: {
       visibility: ['group-hover'],
